@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Simple Problems]]></title>
-  <link href="http://navyapothineni.github.io/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Cassandra | Simple Problems]]></title>
+  <link href="http://navyapothineni.github.io/blog/categories/cassandra/atom.xml" rel="self"/>
   <link href="http://navyapothineni.github.io/"/>
   <updated>2017-04-19T19:50:23-07:00</updated>
   <id>http://navyapothineni.github.io/</id>
@@ -29,18 +29,14 @@
 
 <p>AM allows you to see the parent PID and name by clicking on info. The parent process for me was <code>launchd</code>. A few searches on the internet led me to do the following. I installed Adobe PDF Reader because someone mentioned that that caused automatic updates and I wanted to eliminate all trivial problems. Next, I turned off java automatic updates on the Java Control Panel from System Settings. You can look for the parent process using java to find the arguments passed with <code>ps</code>.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ ps axv | grep java</span></code></pre></td></tr></table></div></figure>
-
+<pre><code>$ ps axv | grep java
+</code></pre>
 
 <p>It gave me a giant output that began like this.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>2819 ??         0:17.00 /usr/bin/java -Xloggc:/usr/local/Cellar/cassandra/3.7/libexec/logs/gc.log -ea -XX:+UseThreadPriorities -XX:ThreadPriorityPolicy=42 -XX:+HeapDumpOnOutOfMemoryError -Xss256k -XX:StringTableSize=1000003 -XX:+AlwaysPreTouch -XX:-UseBiasedLocking -XX:+UseTLAB -XX:+ResizeTLAB -XX:+PerfDisableSharedMem -Djava.net.preferIPv4Stack=true -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:SurvivorRatio=8 -XX:MaxTenuringThreshold=1 -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSWaitDuration=10000
-</span></code></pre></td></tr></table></div></figure>
-
+<pre><code>
+2819 ??         0:17.00 /usr/bin/java -Xloggc:/usr/local/Cellar/cassandra/3.7/libexec/logs/gc.log -ea -XX:+UseThreadPriorities -XX:ThreadPriorityPolicy=42 -XX:+HeapDumpOnOutOfMemoryError -Xss256k -XX:StringTableSize=1000003 -XX:+AlwaysPreTouch -XX:-UseBiasedLocking -XX:+UseTLAB -XX:+ResizeTLAB -XX:+PerfDisableSharedMem -Djava.net.preferIPv4Stack=true -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:SurvivorRatio=8 -XX:MaxTenuringThreshold=1 -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSWaitDuration=10000
+</code></pre>
 
 <p>It was a daemon process that was starting Cassandra and creating tables similar to a stress daemon process. I had installed Cassandra a year ago out of curiosity. I still haven&rsquo;t figured what caused the sudden onset of the daemon process but I quickly uninstalled Cassandra and deleted data, properties and log dirs. This was also a helpful <a href="http://stackoverflow.com/questions/10877072/stop-cassandra-server-on-mac-os-x">Stackoverflow discussion</a>.</p>
 ]]></content>
