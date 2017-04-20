@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>http://navyapothineni.github.io/blog/2017/04/19/hello-world/</loc>
-<lastmod>2017-04-19T19:55:33-07:00</lastmod>
-</url>
-<url>
 <loc>http://navyapothineni.github.io/blog/2017/04/19/a-rogue-daemon/</loc>
 <lastmod>2017-04-19T17:35:25-07:00</lastmod>
 </url>

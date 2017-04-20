@@ -9,7 +9,7 @@
   <meta name="author" content="Navya Pothineni">
 
   
-  <meta name="description" content="I work on a MacBook Pro (mid 2011) with a 500GB of Hard Disk space and 16GB of RAM. I have been putting off updating to SSD for a long time and I &hellip;">
+  <meta name="description" content="I work on a MacBook Pro and in the past few days, I have setup some local servers on my machine, installed a couple of new IDEs, and updated several &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -86,22 +86,19 @@
   </header>
 
 
-<div class="entry-content"><p>I work on a MacBook Pro (mid 2011) with a 500GB of Hard Disk space and 16GB of RAM. I have been putting off updating to SSD for a long time and I might get away with it for a few more months. But in the last week, after I have setup some local servers on my machine, my macbook was becoming noticeably strained. It complained about running out of HDD space and I tried to clear up some unused files and moved some files to an external drive. And I also had to update Java and install some new IDEs. After persistent performance issues (browser crashes and constant complaints about memory), I looked at the Activity Monitor.</p>
+<div class="entry-content"><p>I work on a MacBook Pro and in the past few days, I have setup some local servers on my machine, installed a couple of new IDEs, and updated several tools- which seemed to cause noticeable strain. It complained about running out of HDD space and I tried to clear up some unused files and moved some more to an external drive. After persistent performance issues (browser crashes and constant complaints about memory), I looked at the Activity Monitor.</p>
 
-<p>A process named &ldquo;java&rdquo; kept showing up every minute or so. Hogging a mind blowing 80-130%CPU, 1-5GB RAM and 20% energy.</p>
+<p>A process named <code>java</code> kept showing up every minute or so with a different PID. Hogging a mind blowing 80-130%CPU, 1-5GB RAM and 20% energy.</p>
 
-<!-- more -->
+<p>To debug this, I booted up my machine in <code>Safe Mode</code> (Hold down the shift key during boot up). Check if the issues persist, if they don&rsquo;t you can be sure that a third party application that isn&rsquo;t essential to the kernel is causing the trouble. Safemode lets you eliminate start up items, any issues pertaining to incompatibility in login applications. It also disables certain extras like user installed fonts, deletes kernel/font/system caches, checks for startup disk issues, etc. If the issue persists however, go back to the Activity Monitor.</p>
 
-
-<p>To debug this further, a wise thing to do would be to boot up in <code>Safe Mode</code> (Hold down the shift key during boot up). See if the issues persist, if they don&rsquo;t you can be sure that a third party application that isn&rsquo;t essential for the kernel is causing the trouble. You can also look at start up items, incompatible login items, it also disables certain extras like user installed fonts, deletes kernel, font and system caches, checks for startup disk issues, etc. If the issue persists however go back to the Activity Monitor.</p>
-
-<p>AM allows you to see the parent PID and name by clicking on info. The parent process for me was <code>launchd</code>. A few searches on the internet led me to do the following. I installed Adobe PDF Reader because someone mentioned that that caused automatic updates and I wanted to eliminate all trivial problems. Next, I turned off java automatic updates on the Java Control Panel from System Settings. You can look for the parent process using java to find the arguments passed with <code>ps</code>.</p>
+<p>Activity Monitor allows you to see the parent PID and name of the parent process by clicking on info. The parent process for me was <code>launchd</code>. It is the program that launches the applications on your Mac. A few searches on the internet led me to do the following. Kill programs that caused automatic updates, like PDF readers, text editors, etc. Also turn off java automatic updates on the Java Control Panel from System Settings. You can look for the parent process that is using java along with the arguments passed using <code>ps</code>.</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>$ ps axv | grep java</span></code></pre></td></tr></table></div></figure>
 
 
-<p>It gave me a giant output that began like this.</p>
+<p>You should see an output that looks like this.</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -110,7 +107,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>It was a daemon process that was starting Cassandra and creating tables similar to a stress daemon process. I had installed Cassandra a year ago out of curiosity. I still haven&rsquo;t figured what caused the sudden onset of the daemon process but I quickly uninstalled Cassandra and deleted data, properties and log dirs. This was also a helpful <a href="http://stackoverflow.com/questions/10877072/stop-cassandra-server-on-mac-os-x">Stackoverflow discussion</a>.</p>
+<p>In my case, it was a daemon process that was starting Cassandra and creating tables similar to a stress daemon process. I uninstalled Cassandra and deleted data, properties and log dirs soon after. <a href="http://stackoverflow.com/questions/10877072/stop-cassandra-server-on-mac-os-x">This</a> is a helpful discussion on how to spot problems like this one.</p>
 </div>
 
 
@@ -150,8 +147,6 @@
     <p class="meta">
       
       
-        <a class="basic-alignment right" href="/blog/2017/04/19/hello-world/" title="Next Post: Hello World">Hello World &raquo;</a>
-      
     </p>
   </footer>
 </article>
@@ -163,10 +158,6 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2017/04/19/hello-world/">Hello World</a>
-      </li>
     
       <li class="post">
         <a href="/blog/2017/04/19/a-rogue-daemon/">A Rogue Daemon</a>
