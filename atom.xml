@@ -4,7 +4,7 @@
   <title><![CDATA[Simple Problems]]></title>
   <link href="http://navyapothineni.github.io/atom.xml" rel="self"/>
   <link href="http://navyapothineni.github.io/"/>
-  <updated>2017-04-19T19:50:23-07:00</updated>
+  <updated>2017-04-19T19:57:18-07:00</updated>
   <id>http://navyapothineni.github.io/</id>
   <author>
     <name><![CDATA[Navya Pothineni]]></name>
@@ -12,6 +12,15 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Hello World]]></title>
+    <link href="http://navyapothineni.github.io/blog/2017/04/19/hello-world/"/>
+    <updated>2017-04-19T19:55:33-07:00</updated>
+    <id>http://navyapothineni.github.io/blog/2017/04/19/hello-world</id>
+    <content type="html"><![CDATA[<p>hello!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[A Rogue Daemon]]></title>
