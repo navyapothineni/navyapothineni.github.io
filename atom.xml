@@ -4,7 +4,7 @@
   <title><![CDATA[Simple Problems]]></title>
   <link href="http://navyapothineni.github.io/atom.xml" rel="self"/>
   <link href="http://navyapothineni.github.io/"/>
-  <updated>2017-04-19T21:55:16-07:00</updated>
+  <updated>2017-04-27T16:56:42-07:00</updated>
   <id>http://navyapothineni.github.io/</id>
   <author>
     <name><![CDATA[Navya Pothineni]]></name>
@@ -12,6 +12,104 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Using the Android Studio Experimental Plugin]]></title>
+    <link href="http://navyapothineni.github.io/blog/2017/04/27/using-the-android-studio-experimental-plugin/"/>
+    <updated>2017-04-27T13:27:40-07:00</updated>
+    <id>http://navyapothineni.github.io/blog/2017/04/27/using-the-android-studio-experimental-plugin</id>
+    <content type="html"><![CDATA[<p>Android Studio&rsquo;s experimental plugin allows you to develop JNI applications and helps with NDK integrations. The default location for your C/C++ code, including headers is /src/main/jni. You will also need an Android Make file Android.mk file under the same directory. If your C code uses its own libraries in turn, copy them into jniLibs under main into the folder of your architecture(arm64-v8a/mips/..).</p>
+
+<p>You will also need to add the ndk block in your build.gradle file.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> ndk{
+</span><span class='line'>            moduleName "test-jni"
+</span><span class='line'>    }</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The Android.mk file is a simple Makefile for your C/C++ code. The build system takes care of some details; you don&rsquo;t have to explicitly specify the header files or include paths like in a GNU Makefile. If you want to use the JNI code as a library as you would in case of NDK projects, your Makefile will looks as follows.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>LOCAL_PATH := $(call my-dir) #my-dir is a macro function that returns the current dir
+</span><span class='line'>TARGET_PLATFORM := android-23 #sdk version
+</span><span class='line'>include $(CLEAR_VARS) #CLEAR_VARS is a GNU Makefile that helps the build system clear all LOCAL_XXX variables
+</span><span class='line'>
+</span><span class='line'>LOCAL_MODULE := test-jni #name your module -- should be same in your build.gradle file
+</span><span class='line'>#src
+</span><span class='line'>OBJS = main.c
+</span><span class='line'>OBJS += abc.c
+</span><span class='line'>OBJS += def.c
+</span><span class='line'>OBJS += ghi.c
+</span><span class='line'>OBJS += jkl.c
+</span><span class='line'>
+</span><span class='line'>#cflags
+</span><span class='line'>CFLAGS = -Wall -v
+</span><span class='line'>
+</span><span class='line'>#ldflags
+</span><span class='line'>LDFLAGS =  -L$(LOCAL_PATH) libmyown.so -L$(LOCAL_PATH) libtest.so 
+</span><span class='line'>
+</span><span class='line'>#includes
+</span><span class='line'>INCLUDES += \
+</span><span class='line'>               $(LOCAL_PATH) other/source/folders/include/ \
+</span><span class='line'>
+</span><span class='line'>#shared libs
+</span><span class='line'>HL_SHARED_LIB =
+</span><span class='line'>
+</span><span class='line'>#Android mk releated
+</span><span class='line'>LOCAL_SRC_FILES := $(OBJS)
+</span><span class='line'>LOCAL_CFLAGS := $(CFLAGS)
+</span><span class='line'>LOCAL_CFLAGS := $(CFLAGS)
+</span><span class='line'>LOCAL_LDLIBS := $(LDFLAGS)
+</span><span class='line'>LOCAL_C_INCLUDES := $(INCLUDES)
+</span><span class='line'>
+</span><span class='line'>#USE ONLY ONE OF THESE PER MODULE
+</span><span class='line'>include $(BUILD_EXECUTABLE) #If you want to build a standalone executable
+</span><span class='line'>include $(BUILD_SHARED_LIBRARY) #If you want to build a shared library
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And then you are ready to build the source. You can also use the ndk-build command in your jni folder on command line or use the Build option in Android Studio.</p>
+
+<p>Using asynchronous method calls in the JNI bridge is also an interesting problem. I found <a href="http://adamish.com/blog/archives/327">this</a> very helpful.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[A Rogue Daemon]]></title>
