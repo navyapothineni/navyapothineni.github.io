@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Androidstudio | Simple Problems]]></title>
   <link href="http://navyapothineni.github.io/blog/categories/androidstudio/atom.xml" rel="self"/>
   <link href="http://navyapothineni.github.io/"/>
-  <updated>2017-04-27T16:56:42-07:00</updated>
+  <updated>2017-04-27T16:59:20-07:00</updated>
   <id>http://navyapothineni.github.io/</id>
   <author>
     <name><![CDATA[Navya Pothineni]]></name>
@@ -27,7 +27,7 @@
     }
 </code></pre>
 
-<p>The Android.mk file is a simple Makefile for your C/C++ code. The build system takes care of some details; you don&rsquo;t have to explicitly specify the header files or include paths like in a GNU Makefile. If you want to use the JNI code as a library as you would in case of NDK projects, your Makefile will looks as follows.</p>
+<p>The Android.mk file is a simple Makefile for your C/C++ code. The build system takes care of some details; you don&rsquo;t have to explicitly specify the header files like in a GNU Makefile. If you want to use the JNI code as a library as you would in case of NDK projects, your Makefile will looks as follows.</p>
 
 <pre><code>LOCAL_PATH := $(call my-dir) #my-dir is a macro function that returns the current dir
 TARGET_PLATFORM := android-23 #sdk version
