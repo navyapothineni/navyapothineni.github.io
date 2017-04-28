@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Androidstudio | Simple Problems]]></title>
   <link href="http://navyapothineni.github.io/blog/categories/androidstudio/atom.xml" rel="self"/>
   <link href="http://navyapothineni.github.io/"/>
-  <updated>2017-04-27T16:59:20-07:00</updated>
+  <updated>2017-04-27T17:00:47-07:00</updated>
   <id>http://navyapothineni.github.io/</id>
   <author>
     <name><![CDATA[Navya Pothineni]]></name>
@@ -18,7 +18,7 @@
     <link href="http://navyapothineni.github.io/blog/2017/04/27/using-the-android-studio-experimental-plugin/"/>
     <updated>2017-04-27T13:27:40-07:00</updated>
     <id>http://navyapothineni.github.io/blog/2017/04/27/using-the-android-studio-experimental-plugin</id>
-    <content type="html"><![CDATA[<p>Android Studio&rsquo;s experimental plugin allows you to develop JNI applications and helps with NDK integrations. The default location for your C/C++ code, including headers is /src/main/jni. You will also need an Android Make file Android.mk file under the same directory. If your C code uses its own libraries in turn, copy them into jniLibs under main into the folder of your architecture(arm64-v8a/mips/..).</p>
+    <content type="html"><![CDATA[<p>Android Studio&rsquo;s experimental plugin allows you to develop JNI applications and helps with NDK integrations. The default location for your C/C++ code, including headers is /src/main/jni. You will also need an Android Makefile Android.mk file under the same directory. If your C code uses its own libraries in turn, copy them into jniLibs under main into the folder of your architecture(arm64-v8a/mips/..).</p>
 
 <p>You will also need to add the ndk block in your build.gradle file.</p>
 
@@ -66,7 +66,7 @@ include $(BUILD_EXECUTABLE) #If you want to build a standalone executable
 include $(BUILD_SHARED_LIBRARY) #If you want to build a shared library
 </code></pre>
 
-<p>And then you are ready to build the source. You can also use the ndk-build command in your jni folder on command line or use the Build option in Android Studio.</p>
+<p>And then you are ready to build the source. You can also use the <code>ndk-build</code> command in your jni folder on command line or use the Build option in Android Studio.</p>
 
 <p>Using asynchronous method calls in the JNI bridge is also an interesting problem. I found <a href="http://adamish.com/blog/archives/327">this</a> very helpful.</p>
 ]]></content>

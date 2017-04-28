@@ -89,7 +89,7 @@
   </header>
 
 
-  <div class="entry-content"><p>Android Studio&rsquo;s experimental plugin allows you to develop JNI applications and helps with NDK integrations. The default location for your C/C++ code, including headers is /src/main/jni. You will also need an Android Make file Android.mk file under the same directory. If your C code uses its own libraries in turn, copy them into jniLibs under main into the folder of your architecture(arm64-v8a/mips/..).</p>
+  <div class="entry-content"><p>Android Studio&rsquo;s experimental plugin allows you to develop JNI applications and helps with NDK integrations. The default location for your C/C++ code, including headers is /src/main/jni. You will also need an Android Makefile Android.mk file under the same directory. If your C code uses its own libraries in turn, copy them into jniLibs under main into the folder of your architecture(arm64-v8a/mips/..).</p>
 
 <p>You will also need to add the ndk block in your build.gradle file.</p>
 
@@ -176,7 +176,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>And then you are ready to build the source. You can also use the ndk-build command in your jni folder on command line or use the Build option in Android Studio.</p>
+<p>And then you are ready to build the source. You can also use the <code>ndk-build</code> command in your jni folder on command line or use the Build option in Android Studio.</p>
 
 <p>Using asynchronous method calls in the JNI bridge is also an interesting problem. I found <a href="http://adamish.com/blog/archives/327">this</a> very helpful.</p>
 </div>
