@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Google | Simple Problems]]></title>
+  <link href="http://navyapothineni.github.io/blog/categories/google/atom.xml" rel="self"/>
+  <link href="http://navyapothineni.github.io/"/>
+  <updated>2017-05-20T19:02:59-07:00</updated>
+  <id>http://navyapothineni.github.io/</id>
+  <author>
+    <name><![CDATA[Navya Pothineni]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Working With the Google Cloud Speech API]]></title>
+    <link href="http://navyapothineni.github.io/blog/2017/05/20/working-with-the-google-cloud-speech-api/"/>
+    <updated>2017-05-20T09:29:27-07:00</updated>
+    <id>http://navyapothineni.github.io/blog/2017/05/20/working-with-the-google-cloud-speech-api</id>
+    <content type="html"><![CDATA[<p>Google recently released its Speech to Text API powered by deep learning neural networks. This cloud API analyzes voice bytes and returns text which can be a fun addition to Android apps. I took a jab at it recently and the integration seemed very simple.</p>
+
+<p>First, you&rsquo;ll need to set up your Google Cloud account and installing the command line tools for the Cloud API can be helpful. Find out how, <a href="https://cloud.google.com/speech/docs/getting-started">here</a>. You will also need to set up your Service Account which will give you a credential JSON file(it will be named after your project name) that will be needed to authorize and authenticate your requests to analyze sound bytes. <a href="https://cloud.google.com/speech/docs/common/auth">This</a> page explains how.</p>
+
+<p>Now, if you have successfully sent a request and were able to get a response using an access token from the command line, we can now add the capability to your Android Application using the same Credential file. A look at the sample Speech <a href="https://github.com/GoogleCloudPlatform/android-docs-samples/tree/master/speech/Speech">app</a> is helpful. You will notice that there is a class called <code>SpeechService</code> which calls into Google&rsquo;s API by passing the byte array as data. It also deals with fetching the access token for your account using the Credential JSON file that will need  to be copied into your &lsquo;/app/src/main/res/raw&rsquo; directory.</p>
+
+<p><code>VoiceRecorder</code> class has callback methods for when voice starts and stops as the voice recorder is active and detects voice. <code>Main_Activity</code> brings these two together by starting the speech service and also begins the voice recorder. This class also gets permissions dynamically to allow voice recording.</p>
+
+<p>The sample app also updates the UI to show every recording it has analyzed on the fly. There are also Protocol buffer files in the project that you will need when you are integrating the API into your Android App. If you don&rsquo;t already have the protobuf plugin, your Android Studio will most likely suggest you to install it when you add the files to your project. You will need  to add the following to your gradle files to compile these files.</p>
+
+<p>In your app gradle file:</p>
+
+<pre><code>apply plugin: 'com.google.protobuf'
+
+ext {
+      supportLibraryVersion = '25.3.1'
+      grpcVersion = '1.1.2'
+      protobufVersion = '3.2.0'
+}
+
+android{
+
+  ...
+  ...
+
+ configurations.all {
+    resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.1'
+    resolutionStrategy.force "com.android.support:support-annotations:$supportLibraryVersion"
+ }
+
+ sourceSets{
+    main{
+      proto{
+        srcDir 'src/main/proto'
+      }
+    }
+ }
+}
+
+protobuf{
+  protoc{
+        artifact = "com.google.protobuf:protoc:$protobufVersion"
+    }
+    plugins {
+        javalite {
+            artifact = "com.google.protobuf:protoc-gen-javalite:3.0.0"
+        }
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+        }
+    }
+    generateProtoTasks {
+        all().each { task -&gt;
+            task.plugins {
+                javalite {}
+                grpc {
+                    // Options added to --grpc_out
+                    option 'lite'
+                }
+            }
+        }
+    }
+}
+
+dependencies{
+    compile "io.grpc:grpc-okhttp:$grpcVersion"
+    compile "io.grpc:grpc-protobuf-lite:$grpcVersion"
+    compile "io.grpc:grpc-stub:$grpcVersion"
+    compile 'javax.annotation:javax.annotation-api:1.2'
+    protobuf "com.google.protobuf:protobuf-java:$protobufVersion"
+
+    // OAuth2 for Google API
+    compile('com.google.auth:google-auth-library-oauth2-http:0.6.0') {
+        exclude module: 'httpclient'
+    }
+}
+</code></pre>
+
+<p>In your project&rsquo;s Gradle file, add the protobuf plugin to dependencies.</p>
+
+<pre><code>dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.2'
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.0'
+}
+</code></pre>
+
+<p>Common errors you might run into:</p>
+
+<p>1) An error about <code>R.raw.credential</code> in <code>SpeechService</code> - Place the JSON file you got from your Service account in your project as mentioned above.</p>
+
+<p>2) <code>Error calling the API.</code> - Begin by checking if the device your testing this on has internet access. We need to fetch the access token by making a post request.</p>
+]]></content>
+  </entry>
+  
+</feed>
