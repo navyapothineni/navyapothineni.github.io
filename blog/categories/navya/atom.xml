@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Navya | Simple Problems]]></title>
+  <link href="http://navyapothineni.github.io/blog/categories/navya/atom.xml" rel="self"/>
+  <link href="http://navyapothineni.github.io/"/>
+  <updated>2017-07-27T21:47:42-07:00</updated>
+  <id>http://navyapothineni.github.io/</id>
+  <author>
+    <name><![CDATA[Navya Pothineni]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Working With the Google Cloud Speech API]]></title>
+    <link href="http://navyapothineni.github.io/blog/2017/05/20/working-with-the-google-cloud-speech-api/"/>
+    <updated>2017-05-20T09:29:27-07:00</updated>
+    <id>http://navyapothineni.github.io/blog/2017/05/20/working-with-the-google-cloud-speech-api</id>
+    <content type="html"><![CDATA[<p>Google recently released its Speech to Text API powered by deep learning neural networks. This cloud API analyzes voice bytes and returns text which can be a fun addition to Android apps. I took a jab at it recently and the integration seemed very simple.</p>
+
+<p>First, you&rsquo;ll need to set up your Google Cloud account and installing the command line tools for the Cloud API can be helpful. Find out how, <a href="https://cloud.google.com/speech/docs/getting-started">here</a>. You will also need to set up your Service Account which will give you a credential JSON file(it will be named after your project name) that will be needed to authorize and authenticate your requests to analyze sound bytes. <a href="https://cloud.google.com/speech/docs/common/auth">This</a> page explains how.</p>
+
+<p>Now, if you have successfully sent a request and were able to get a response using an access token from the command line, we can now add the capability to your Android Application using the same Credential file. A look at the sample Speech <a href="https://github.com/GoogleCloudPlatform/android-docs-samples/tree/master/speech/Speech">app</a> is helpful. You will notice that there is a class called <code>SpeechService</code> which calls into Google&rsquo;s API by passing the byte array as data. It also deals with fetching the access token for your account using the Credential JSON file that will need  to be copied into your &lsquo;/app/src/main/res/raw&rsquo; directory.</p>
+
+<p><code>VoiceRecorder</code> class has callback methods for when voice starts and stops as the voice recorder is active and detects voice. <code>Main_Activity</code> brings these two together by starting the speech service and also begins the voice recorder. This class also gets permissions dynamically to allow voice recording.</p>
+
+<p>The sample app also updates the UI to show every recording it has analyzed on the fly. There are also Protocol buffer files in the project that you will need when you are integrating the API into your Android App. If you don&rsquo;t already have the protobuf plugin, your Android Studio will most likely suggest you to install it when you add the files to your project. You will need  to add the following to your gradle files to compile these files.</p>
+
+<p>In your app gradle file:</p>
+
+<pre><code>apply plugin: 'com.google.protobuf'
+
+ext {
+      supportLibraryVersion = '25.3.1'
+      grpcVersion = '1.1.2'
+      protobufVersion = '3.2.0'
+}
+
+android{
+
+  ...
+  ...
+
+ configurations.all {
+    resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.1'
+    resolutionStrategy.force "com.android.support:support-annotations:$supportLibraryVersion"
+ }
+
+ sourceSets{
+    main{
+      proto{
+        srcDir 'src/main/proto'
+      }
+    }
+ }
+}
+
+protobuf{
+  protoc{
+        artifact = "com.google.protobuf:protoc:$protobufVersion"
+    }
+    plugins {
+        javalite {
+            artifact = "com.google.protobuf:protoc-gen-javalite:3.0.0"
+        }
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+        }
+    }
+    generateProtoTasks {
+        all().each { task -&gt;
+            task.plugins {
+                javalite {}
+                grpc {
+                    // Options added to --grpc_out
+                    option 'lite'
+                }
+            }
+        }
+    }
+}
+
+dependencies{
+    compile "io.grpc:grpc-okhttp:$grpcVersion"
+    compile "io.grpc:grpc-protobuf-lite:$grpcVersion"
+    compile "io.grpc:grpc-stub:$grpcVersion"
+    compile 'javax.annotation:javax.annotation-api:1.2'
+    protobuf "com.google.protobuf:protobuf-java:$protobufVersion"
+
+    // OAuth2 for Google API
+    compile('com.google.auth:google-auth-library-oauth2-http:0.6.0') {
+        exclude module: 'httpclient'
+    }
+}
+</code></pre>
+
+<p>In your project&rsquo;s Gradle file, add the protobuf plugin to dependencies.</p>
+
+<pre><code>dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.2'
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.0'
+}
+</code></pre>
+
+<p>Common errors you might run into:</p>
+
+<p>1) An error about <code>R.raw.credential</code> in <code>SpeechService</code> - Place the JSON file you got from your Service account in your project as mentioned above.</p>
+
+<p>2) <code>Error calling the API.</code> - Begin by checking if the device your testing this on has internet access. We need to fetch the access token by making a post request.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using the Android Studio Experimental Plugin]]></title>
+    <link href="http://navyapothineni.github.io/blog/2017/04/27/using-the-android-studio-experimental-plugin/"/>
+    <updated>2017-04-27T13:27:40-07:00</updated>
+    <id>http://navyapothineni.github.io/blog/2017/04/27/using-the-android-studio-experimental-plugin</id>
+    <content type="html"><![CDATA[<p>Android Studio&rsquo;s experimental plugin allows you to develop JNI applications and helps with NDK integrations. The default location for your C/C++ code, including headers is /src/main/jni. You will also need an Android Makefile Android.mk file under the same directory. If your C code uses its own libraries in turn, copy them into jniLibs under main into the folder of your architecture(arm64-v8a/mips/..).</p>
+
+<p>You will also need to add the ndk block in your build.gradle file.</p>
+
+<pre><code> ndk{
+            moduleName "test-jni"
+    }
+</code></pre>
+
+<p>The Android.mk file is a simple Makefile for your C/C++ code. The build system takes care of some details; you don&rsquo;t have to explicitly specify the header files like in a GNU Makefile. If you want to use the JNI code as a library as you would in case of NDK projects, your Makefile will looks as follows.</p>
+
+<pre><code>LOCAL_PATH := $(call my-dir) #my-dir is a macro function that returns the current dir
+TARGET_PLATFORM := android-23 #sdk version
+include $(CLEAR_VARS) #CLEAR_VARS is a GNU Makefile that helps the build system clear all LOCAL_XXX variables
+
+LOCAL_MODULE := test-jni #name your module -- should be same in your build.gradle file
+#src
+OBJS = main.c
+OBJS += abc.c
+OBJS += def.c
+OBJS += ghi.c
+OBJS += jkl.c
+
+#cflags
+CFLAGS = -Wall -v
+
+#ldflags
+LDFLAGS =  -L$(LOCAL_PATH) libmyown.so -L$(LOCAL_PATH) libtest.so 
+
+#includes
+INCLUDES += \
+               $(LOCAL_PATH) other/source/folders/include/ \
+
+#shared libs
+HL_SHARED_LIB =
+
+#Android mk releated
+LOCAL_SRC_FILES := $(OBJS)
+LOCAL_CFLAGS := $(CFLAGS)
+LOCAL_CFLAGS := $(CFLAGS)
+LOCAL_LDLIBS := $(LDFLAGS)
+LOCAL_C_INCLUDES := $(INCLUDES)
+
+#USE ONLY ONE OF THESE PER MODULE
+include $(BUILD_EXECUTABLE) #If you want to build a standalone executable
+include $(BUILD_SHARED_LIBRARY) #If you want to build a shared library
+</code></pre>
+
+<p>And then you are ready to build the source. You can also use the <code>ndk-build</code> command in your jni folder on command line or use the Build option in Android Studio.</p>
+
+<p>Using asynchronous method calls in the JNI bridge is also an interesting problem. I found <a href="http://adamish.com/blog/archives/327">this</a> very helpful.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[A Rogue Daemon]]></title>
+    <link href="http://navyapothineni.github.io/blog/2017/04/19/a-rogue-daemon/"/>
+    <updated>2017-04-19T17:35:25-07:00</updated>
+    <id>http://navyapothineni.github.io/blog/2017/04/19/a-rogue-daemon</id>
+    <content type="html"><![CDATA[<p>I work on a MacBook Pro and in the past few days, I have setup some local servers on my machine, installed a couple of new IDEs, and updated several tools- which seemed to cause noticeable strain. It complained about running out of HDD space and I tried to clear up some unused files and moved some more to an external drive. After persistent performance issues (browser crashes and constant complaints about memory), I looked at the Activity Monitor.</p>
+
+<p>A process named <code>java</code> kept showing up every minute or so with a different PID. Hogging a mind blowing 80-130%CPU, 1-5GB RAM and 20% energy.</p>
+
+<p>To debug this, I booted up my machine in <code>Safe Mode</code> (Hold down the shift key during boot up). Check if the issues persist, if they don&rsquo;t you can be sure that a third party application that isn&rsquo;t essential to the kernel is causing the trouble. Safemode lets you eliminate start up items, any issues pertaining to incompatibility in login applications. It also disables certain extras like user installed fonts, deletes kernel/font/system caches, checks for startup disk issues, etc. If the issue persists however, go back to the Activity Monitor.</p>
+
+<p>Activity Monitor allows you to see the parent PID and name of the parent process by clicking on info. The parent process for me was <code>launchd</code>. It is the program that launches the applications on your Mac. A few searches on the internet led me to do the following. Kill programs that caused automatic updates, like PDF readers, text editors, etc. Also turn off java automatic updates on the Java Control Panel from System Settings. You can look for the parent process that is using java along with the arguments passed using <code>ps</code>.</p>
+
+<pre><code>$ ps axv | grep java
+</code></pre>
+
+<p>You should see an output that looks like this.</p>
+
+<pre><code>
+2819 ??         0:17.00 /usr/bin/java -Xloggc:/usr/local/Cellar/cassandra/3.7/libexec/logs/gc.log -ea -XX:+UseThreadPriorities -XX:ThreadPriorityPolicy=42 -XX:+HeapDumpOnOutOfMemoryError -Xss256k -XX:StringTableSize=1000003 -XX:+AlwaysPreTouch -XX:-UseBiasedLocking -XX:+UseTLAB -XX:+ResizeTLAB -XX:+PerfDisableSharedMem -Djava.net.preferIPv4Stack=true -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:SurvivorRatio=8 -XX:MaxTenuringThreshold=1 -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSWaitDuration=10000
+</code></pre>
+
+<p>In my case, it was a daemon process that was starting Cassandra and creating tables similar to a stress daemon process. I uninstalled Cassandra and deleted data, properties and log dirs soon after. <a href="http://stackoverflow.com/questions/10877072/stop-cassandra-server-on-mac-os-x">This</a> is a helpful discussion on how to spot problems like this one.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,235 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>A C Programmer's Guide to Python - Simple Problems</title>
+  <meta name="author" content="Navya Pothineni">
+
+  
+  <meta name="description" content="With Codecademy’s Python boot camp as my only previous experience with Python, I started working for odrive in June. Our sync engine is written in &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://navyapothineni.github.io/blog/2017/07/27/a-c-programmers-guide-to-python/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Simple Problems" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Simple Problems</a></h1>
+  
+    <h2>A blog.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss email">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+    <li><a href="pothineni.navya@gmail.com" rel="subscribe-email" title="subscribe via email">Email</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="navyapothineni.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h3 class="entry-title">A C Programmer's Guide to Python</h3>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2017-07-27T21:23:13-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>9:23 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>With Codecademy’s Python boot camp as my only previous experience with Python, I started working for <a href="https://www.odrive.com/">odrive</a> in June. Our sync engine is written in Python. This is the magic code that helps keep local files in sync with the remote files on their respective cloud platforms and I now happen to be a part of the sync team.</p>
+
+<p>Some of the things you have probably heard about Python are that it is a general purpose, high level (reads like English), flexible, and a dynamically typed language. In essence, not only is it excellent for beginners who are learning to program, but it is also increasingly becoming the choice of language for software developers. Python was also recently ranked <a href="http://spectrum.ieee.org/computing/software/the-2017-top-programming-languages">1st</a> among programming languages by IEEE.</p>
+
+<p>Having worked mostly with statically typed programming languages, I particularly enjoy the freedom of dynamic typing in Python. So far, writing code without a care in the world for memory leaks, corruptions, and the looming dread of segmentation faults, has been as pleasant as the colder side of a pillow.
+Dynamic Typing: If you have used JavaScript, GO or Objective-C, you are probably familiar with this concept. It is to say that every variable is bound to an object instead of a type.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>int a = 0;  // this can only be an int
+</span><span class='line'>
+</span><span class='line'>vs
+</span><span class='line'>
+</span><span class='line'>a = "this_could_be_a_string"
+</span><span class='line'>a = 0  # or an integer</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Interpreted Language: Python is an interpreted language, in contrast to C/C++ which needs explicit compiling before executing the program. Although compiled programs run faster than interpreted programs, so far the only thing I have come to miss is the excuse to browse Reddit while I wait for my code to compile.</p>
+
+<p>An IDE like PyCharm is helpful with Python to spot problems that a compiler would help spot. The absence of code compilation has made me more introspective about coding errors I make that are blaringly pointed out by the compiler. Instead of spending more time debugging over simple mistakes, I have, as a result, become more careful when writing code to avoid obvious mistakes - like double checking members of a class exist before I access them. Perhaps, this can be improved by a logging system to watch for trends and cut down time systematically with a well organized checklist.</p>
+
+<p>Readability: This has to be my favorite part about Python. A hard truth about programming that I have come to observe is as Robert C. Martin says in his book, Clean Code.</p>
+
+<p>“.. the ratio of time spent reading versus writing is well over 10 to 1. We are constantly reading old code as part of the effort to write new code. …[Therefore,] making it easy to read makes it easier to write.”</p>
+
+<p>Python emphasizes on concise, readable code as opposed to having fine grain control over the smallest units of memory in case of C.</p>
+
+<p>Libraries Galore: Easily extend Python with useful modules, libraries and packages. Find a commonly used list <a href="https://wiki.python.org/moin/UsefulModules">here</a>.</p>
+
+<p>Although I sometimes instinctively find the need to declare functions before using them, working with Python has been absolutely fun.
+If you are just getting started with Python and want to take a look at the coding practices, find a helpful guide <a href="https://www.python.org/dev/peps/pep-0008/">here</a>. A wiki about standard libraries <a href="https://docs.python.org/2/library/index.html">here</a> and just for kicks, look into why NASA uses Python <a href="https://www.python.org/about/success/usa/">here</a>.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Navya Pothineni</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2017-07-27T21:23:13-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>9:23 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/c/'>c</a>, <a class='category' href='/blog/categories/differences/'>differences</a>, <a class='category' href='/blog/categories/programming/'>programming</a>, <a class='category' href='/blog/categories/python/'>python</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://navyapothineni.github.io/blog/2017/07/27/a-c-programmers-guide-to-python/" data-via="" data-counturl="http://navyapothineni.github.io/blog/2017/07/27/a-c-programmers-guide-to-python/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2017/05/20/working-with-the-google-cloud-speech-api/" title="Previous Post: Working with the Google Cloud Speech API">&laquo; Working with the Google Cloud Speech API</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/07/27/a-c-programmers-guide-to-python/">A C Programmer's Guide to Python</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/05/20/working-with-the-google-cloud-speech-api/">Working With the Google Cloud Speech API</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/04/27/using-the-android-studio-experimental-plugin/">Using the Android Studio Experimental Plugin</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/04/19/a-rogue-daemon/">A Rogue Daemon</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Navya Pothineni -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
