@@ -4,7 +4,7 @@
   <title><![CDATA[Simple Problems]]></title>
   <link href="http://navyapothineni.github.io/atom.xml" rel="self"/>
   <link href="http://navyapothineni.github.io/"/>
-  <updated>2017-08-05T14:30:27-07:00</updated>
+  <updated>2017-08-05T15:06:38-07:00</updated>
   <id>http://navyapothineni.github.io/</id>
   <author>
     <name><![CDATA[Navya Pothineni]]></name>
@@ -12,6 +12,75 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[A C Programmer's Guide to Python]]></title>
+    <link href="http://navyapothineni.github.io/blog/2017/08/05/a-c-programmers-guide-to-python/"/>
+    <updated>2017-08-05T14:32:32-07:00</updated>
+    <id>http://navyapothineni.github.io/blog/2017/08/05/a-c-programmers-guide-to-python</id>
+    <content type="html"><![CDATA[<p>With Codecademy’s Python boot camp as my only previous experience with Python, I started working for <a href="https://www.odrive.com/">odrive</a> in June. Our sync engine is written in Python. This is the magic code that helps keep local files in sync with the remote files on their respective cloud platforms and I now happen to be a part of the sync team.</p>
+
+<p>Some of the things you have probably heard about the language: it is general purpose, high-level (reads like English), flexible, and dynamically-typed. In essence, not only is it excellent for beginners who are learning to program, but it is increasingly becoming the choice of language for software developers across the board. Python has also recently been ranked <a href="http://spectrum.ieee.org/computing/software/the-2017-top-programming-languages">1st</a> among programming languages by IEEE.</p>
+
+<p>Having worked mostly with statically-typed programming languages, I particularly enjoy the freedom of dynamic-typing in Python. Writing code without a care in the world for memory leaks, corruptions, and the looming dread of segmentation faults has been cooler than the other side of the pillow.</p>
+
+<p>Dynamic Typing: If you have used JavaScript, GO or Objective-C, you are probably familiar with this concept. It is to say that every variable is bound to an object instead of a type.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>int a = 0;  //this can only be an integer
+</span><span class='line'>
+</span><span class='line'>vs
+</span><span class='line'>
+</span><span class='line'>a = 'this_can_be_a_string'
+</span><span class='line'>a = 0  # or an integer
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Interpreted Language: Python is an interpreted language, in contrast to C/C++ which needs explicit compiling before executing the program. Although compiled programs run faster than interpreted programs much of the performance chasm is negligibly noticeable. So far the only thing I have come to miss is the excuse to browse Reddit while I wait for my code to compile.</p>
+
+<p>An IDE (Integrated Development Environment) like PyCharm loaded with a code analyzer like Pylint is helpful with Python to highlight problems that a compiler would help spot. The absence of code compilation has made me more introspective about coding errors which otherwise would be blaringly pointed out by the compiler. Instead of spending precious time debugging over simple errors, I have, as a result, become more careful when writing code to avoid obvious mistakes (like double checking members of a class actually exist before I attempt to access them). Perhaps, this can furthermore be improved by a logging system to watch for trends and cut down dev time systematically with a well organized checklist.</p>
+
+<p>Readability: This has to be my favorite part about Python. A hard truth about programming is as Robert C. Martin says in his book, Clean Code:</p>
+
+<p>“.. the ratio of time spent reading versus writing is well over 10 to 1. We are constantly reading old code as part of the effort to write new code. …[Therefore,] making it easy to read makes it easier to write.”</p>
+
+<p>Python emphasizes on concise, readable code as opposed to having fine grain control over the smallest units of memory like C. Everything of course has its purpose for which it is well-suited. For us, Python’s clarity is gold.</p>
+
+<p>Libraries Galore: Easily extend Python with useful modules, libraries and packages. You can find a commonly used list <a href="https://wiki.python.org/moin/UsefulModules">here</a>. With JIT compilers, tools that help manage Python packages, compiling Python code to C-like code that runs much faster, modules, and libraries, help make Python enjoyable and fun to work with. Find an interesting list of packages <a href="http://www.lleess.com/2013/03/7-python-libraries-you-should-know-about.html#.WYVpVojys2w">here</a>.</p>
+
+<p>The way I program has changed somewhat drastically.</p>
+
+<p>For example:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># what I am used to 
+</span><span class='line'>x = None
+</span><span class='line'>if (some_condition):
+</span><span class='line'>     x = y
+</span><span class='line'>     return x
+</span><span class='line'>
+</span><span class='line'># what can be done in Python
+</span><span class='line'>     return y if some_condition else None
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Although I sometimes instinctively find the need to declare functions before using them, working with Python has been absolutely fun.</p>
+
+<p>If you are just getting started with Python and want to take a look at the coding practices, you can find a helpful guide <a href="https://www.python.org/dev/peps/pep-0008/">here</a>. Furthermore, a wiki about standard libraries <a href="https://docs.python.org/2/library/index.html">here</a> and just for kicks, check out why NASA uses Python <a href="https://www.python.org/about/success/usa/">here</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Working With the Google Cloud Speech API]]></title>

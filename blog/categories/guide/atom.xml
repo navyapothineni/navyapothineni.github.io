@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: C | Simple Problems]]></title>
-  <link href="http://navyapothineni.github.io/blog/categories/c/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Guide | Simple Problems]]></title>
+  <link href="http://navyapothineni.github.io/blog/categories/guide/atom.xml" rel="self"/>
   <link href="http://navyapothineni.github.io/"/>
   <updated>2017-08-05T15:06:38-07:00</updated>
   <id>http://navyapothineni.github.io/</id>
@@ -63,65 +63,6 @@ if (some_condition):
 <p>Although I sometimes instinctively find the need to declare functions before using them, working with Python has been absolutely fun.</p>
 
 <p>If you are just getting started with Python and want to take a look at the coding practices, you can find a helpful guide <a href="https://www.python.org/dev/peps/pep-0008/">here</a>. Furthermore, a wiki about standard libraries <a href="https://docs.python.org/2/library/index.html">here</a> and just for kicks, check out why NASA uses Python <a href="https://www.python.org/about/success/usa/">here</a>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Using the Android Studio Experimental Plugin]]></title>
-    <link href="http://navyapothineni.github.io/blog/2017/04/27/using-the-android-studio-experimental-plugin/"/>
-    <updated>2017-04-27T13:27:40-07:00</updated>
-    <id>http://navyapothineni.github.io/blog/2017/04/27/using-the-android-studio-experimental-plugin</id>
-    <content type="html"><![CDATA[<p>Android Studio&rsquo;s experimental plugin allows you to develop JNI applications and helps with NDK integrations. The default location for your C/C++ code, including headers is /src/main/jni. You will also need an Android Makefile Android.mk file under the same directory. If your C code uses its own libraries in turn, copy them into jniLibs under main into the folder of your architecture(arm64-v8a/mips/..).</p>
-
-<p>You will also need to add the ndk block in your build.gradle file.</p>
-
-<pre><code> ndk{
-            moduleName "test-jni"
-    }
-</code></pre>
-
-<p>The Android.mk file is a simple Makefile for your C/C++ code. The build system takes care of some details; you don&rsquo;t have to explicitly specify the header files like in a GNU Makefile. If you want to use the JNI code as a library as you would in case of NDK projects, your Makefile will looks as follows.</p>
-
-<pre><code>LOCAL_PATH := $(call my-dir) #my-dir is a macro function that returns the current dir
-TARGET_PLATFORM := android-23 #sdk version
-include $(CLEAR_VARS) #CLEAR_VARS is a GNU Makefile that helps the build system clear all LOCAL_XXX variables
-
-LOCAL_MODULE := test-jni #name your module -- should be same in your build.gradle file
-#src
-OBJS = main.c
-OBJS += abc.c
-OBJS += def.c
-OBJS += ghi.c
-OBJS += jkl.c
-
-#cflags
-CFLAGS = -Wall -v
-
-#ldflags
-LDFLAGS =  -L$(LOCAL_PATH) libmyown.so -L$(LOCAL_PATH) libtest.so 
-
-#includes
-INCLUDES += \
-               $(LOCAL_PATH) other/source/folders/include/ \
-
-#shared libs
-HL_SHARED_LIB =
-
-#Android mk releated
-LOCAL_SRC_FILES := $(OBJS)
-LOCAL_CFLAGS := $(CFLAGS)
-LOCAL_CFLAGS := $(CFLAGS)
-LOCAL_LDLIBS := $(LDFLAGS)
-LOCAL_C_INCLUDES := $(INCLUDES)
-
-#USE ONLY ONE OF THESE PER MODULE
-include $(BUILD_EXECUTABLE) #If you want to build a standalone executable
-include $(BUILD_SHARED_LIBRARY) #If you want to build a shared library
-</code></pre>
-
-<p>And then you are ready to build the source. You can also use the <code>ndk-build</code> command in your jni folder on command line or use the Build option in Android Studio.</p>
-
-<p>Using asynchronous method calls in the JNI bridge is also an interesting problem. I found <a href="http://adamish.com/blog/archives/327">this</a> very helpful.</p>
 ]]></content>
   </entry>
   
